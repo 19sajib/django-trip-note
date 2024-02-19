@@ -72,3 +72,13 @@ class NoteUpdateView(UpdateView):
 class NoteDeleteview(DeleteView):
     model = Note
     success_url = reverse_lazy('note-list')
+    
+class TripUpdateView(UpdateView):
+    model = Trip
+    success_url = reverse_lazy('trip-list')
+    fields = ["city", "country", "start_date", "end_date"]
+    #template named model_form.html
+
+class TripDeleteView(DeleteView):
+    model = Trip
+    success_url = reverse_lazy('trip-list')
