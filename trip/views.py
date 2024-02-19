@@ -1,7 +1,7 @@
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, DetailView, ListView
+from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView
 
 from .models import Trip, Note
 
@@ -45,3 +45,30 @@ class NoteListView(ListView):
     def get_queryset(self):
         queryset = Note.objects.filter(trip__owner=self.request.user)
         return queryset
+    
+class NoteCreateView(CreateView):
+    model = Note
+    success_url = reverse_lazy('note-list')
+    fields = "__all__"
+    
+    def get_form(self):
+        form = super(NoteCreateView, self).get_form()
+        trips = Trip.objects.filter(owner=self.request.user)
+        form.fields['trip'].queryset = trips
+        return form
+    
+class NoteUpdateView(UpdateView):
+    model = Note
+    success_url = reverse_lazy('note-list')
+    fields = "__all__"
+    
+    def get_form(self):
+        form = super(NoteUpdateView, self).get_form()
+        trips = Trip.objects.filter(owner=self.request.user)
+        form.fields['trip'].queryset = trips
+        return form
+    
+    
+class NoteDeleteview(DeleteView):
+    model = Note
+    success_url = reverse_lazy('note-list')
