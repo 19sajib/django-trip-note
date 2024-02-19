@@ -1,4 +1,4 @@
-{% comment %} {% load tailwind_filters %} {% endcomment %}
+{% load tailwind_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +28,7 @@
         
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
-            {{form}}
+            {{form|crispy}}
             <input class="px-7 py-2 bg-green-400 hover:cursor-pointer hover:bg-green-300 rounded" type="submit" value="Login">
             <input type="hidden" name="next" value={{next}}>
         </form>
