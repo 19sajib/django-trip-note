@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MaxLengthValidator
+from django.core.validators import MaxValueValidator
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -26,10 +26,10 @@ class Note(models.Model):
     
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='notes')
     name = models.CharField(max_length=100)
-    description = models.TimeField()
+    description = models.TextField()
     type = models.CharField(max_length=100, choices=EXCURSIONS)
     img = models.ImageField(upload_to='notes', blank=True, null=True)
-    rating = models.PositiveSmallIntegerField(default=1, validators=[MaxLengthValidator(5)])
+    rating = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(5)])
     
     def __str__(self) -> str:
         return f"{self.name} in {self.trip.city}"
